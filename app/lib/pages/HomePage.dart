@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
-
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -13,13 +13,14 @@ class _HomePageState extends State<HomePage> {
   final TextEditingController _messageController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
   final List<ChatMessage> _messages = [];
+  final webSocketURL = dotenv.env["WEBSOCKET_URL"];
   late WebSocketChannel _channel;
   bool _isConnected = false;
   @override
   void initState() {
     super.initState();
     _connectWebSocket();
-    
+
     // Add a delay to show the MCP configuration reminder
     Future.delayed(const Duration(seconds: 1), () {
       if (mounted) {
@@ -36,10 +37,9 @@ class _HomePageState extends State<HomePage> {
       }
     });
   }
-
   void _connectWebSocket() {
     try {
-      final wsUrl = Uri.parse('ws://localhost:8080');
+      final wsUrl = Uri.parse(webSocketURL!);
       _channel = WebSocketChannel.connect(wsUrl);
 
       setState(() {
@@ -84,7 +84,6 @@ class _HomePageState extends State<HomePage> {
       final message = _messageController.text;
       
       if (_isConnected) {
-        // Format message as requested: "message:message"
         final formattedMessage = jsonEncode({
           'type': 'message',
           'content': message
