@@ -1,6 +1,6 @@
 # X-Agent
 
-https://github.com/user-attachments/assets/d051bce4-6582-4129-a646-20f959724d1d
+https://github.com/user-attachments/assets/a10877b7-c70b-46fd-a3d8-557227046ad0
 
 A Flutter-based AI agent application that can connect to any MCP (Model Context Protocol) server. Once connected, it can use the tools available on that server to complete different tasks. It's like giving the AI access to a set of tools so it can actually do things — not just give answers.
 
